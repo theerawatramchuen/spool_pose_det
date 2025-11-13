@@ -74,7 +74,7 @@ This system is designed to automatically detect "spool poses" in video files usi
 - max_percent: Maximum vertical percentage threshold
 - wrist_type: Which wrists to validate ("left", "right", "both")
 - max_shoulder_percent: Maximum shoulder width percentage
-- 
+  
 **Validation Logic:**
 - Calculates reference range from shoulders (0%) to hips (100%)
 - Validates wrist vertical positions within specified percentage range
@@ -87,7 +87,9 @@ This system is designed to automatically detect "spool poses" in video files usi
 - Configurable validation parameters
 
 **2. process_video(source, output_path, model, confidence_threshold=0.5, ...)**
+
 **Purpose:** Main video processing pipeline
+
 **Processing Flow:**
 1. Opens video source and initializes processing
 
@@ -109,73 +111,66 @@ This system is designed to automatically detect "spool poses" in video files usi
 - Frame skipping after clip detection to avoid redundant processing
 
 **3. process_specific_sources()**
-Purpose: Automated batch processing of video files
 
-Workflow:
+**Purpose:** Automated batch processing of video files
 
-Scans input folder for .mp4 files
+**Workflow:**
 
-Moves each file to processed_files folder before processing
+1. Scans input folder for .mp4 files
 
-Processes files sequentially from processed_files folder
+2. Moves each file to processed_files folder before processing
 
-Uses GPU if available for accelerated processing
+3. Processes files sequentially from processed_files folder
 
-Maintains organized file structure
+4. Uses GPU if available for accelerated processing
 
-File Management:
+5. Maintains organized file structure
 
-Input folder: C:\RecordDownload
+**File Management:**
 
-Processed files: C:\RecordDownload\processed_files
+- Input folder: C:\RecordDownload
 
-Output files: Saved in input folder with processed_ prefix
+- Processed files: C:\RecordDownload\processed_files
 
-Spool pose images: Saved in spool_pose folder
+- Output files: Saved in input folder with processed_ prefix
 
-Video clips: Saved in spool_pose_clips folder
+- Spool pose images: Saved in spool_pose folder
 
-4. draw_pose_keypoints(image, keypoints, validation_results=None)
-Purpose: Visualizes pose estimation results and validation status
+- Video clips: Saved in spool_pose_clips folder
 
-Visual Elements:
+**4. draw_pose_keypoints(image, keypoints, validation_results=None)**
 
-Skeleton connections between keypoints
+**Purpose:** Visualizes pose estimation results and validation status
 
-Keypoint circles
+**Visual Elements:**
+- Skeleton connections between keypoints
+- Keypoint circles
+- Validation status text (PASS/FAIL)
+- Percentage measurements
+- Color-coded results (green=valid, red=invalid)
 
-Validation status text (PASS/FAIL)
+**5. save_spool_pose_frame() & save_spool_pose_clip()**
 
-Percentage measurements
+**Purpose:** Captures and saves spool pose evidence
 
-Color-coded results (green=valid, red=invalid)
+**Frame Capture:**
+- Saves individual frames with pose overlays
+- Includes timestamp and frame information
+- Stores in spool_pose folder
 
-5. save_spool_pose_frame() & save_spool_pose_clip()
-Purpose: Captures and saves spool pose evidence
+**Clip Capture:**
+- Creates 600-frame video clips (300 frames before/after detection)
+- Saves in spool_pose_clips folder
+- Provides context around detected poses
 
-Frame Capture:
-
-Saves individual frames with pose overlays
-
-Includes timestamp and frame information
-
-Stores in spool_pose folder
-
-Clip Capture:
-
-Creates 600-frame video clips (300 frames before/after detection)
-
-Saves in spool_pose_clips folder
-
-Provides context around detected poses
-
-Configuration Parameters
-Pose Validation Settings
-python
+## Configuration Parameters
+### Pose Validation Settings
+```python
 MIN_VERTICAL_PERCENT = -20    # Minimum wrist vertical position (%)
 MAX_VERTICAL_PERCENT = 20     # Maximum wrist vertical position (%)
 WRIST_TYPE = "both"           # Which wrists to validate
-MAX_SHOULDER_PERCENT = 10     # Maximum shoulder width (%)
+MAX_SHOULDER_PERCENT = 10     # Maximum shoulder width (%)```
+
 Processing Settings
 python
 confidence_threshold = 0.5    # YOLO detection confidence

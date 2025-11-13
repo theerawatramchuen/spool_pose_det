@@ -63,68 +63,51 @@ This system is designed to automatically detect "spool poses" in video files usi
 - File Management System - Automated file organization
 - Visualization Tools - Real-time display and overlay generation
 
-Key Functions Documentation
-1. validate_wrist_position(person_kpts, min_percent, max_percent, wrist_type="both", max_shoulder_percent=30)
-Purpose: Validates if detected wrists meet spool pose criteria
+### Key Functions Documentation
+**1. validate_wrist_position(person_kpts, min_percent, max_percent, wrist_type="both", max_shoulder_percent=30)**
+**Purpose:** Validates if detected wrists meet spool pose criteria
 
-Parameters:
+**Parameters:**
+- person_kpts: Array of person keypoints (17 COCO format keypoints)
+- min_percent: Minimum vertical percentage threshold
+- max_percent: Maximum vertical percentage threshold
+- wrist_type: Which wrists to validate ("left", "right", "both")
+- max_shoulder_percent: Maximum shoulder width percentage
+- 
+**Validation Logic:**
+- Calculates reference range from shoulders (0%) to hips (100%)
+- Validates wrist vertical positions within specified percentage range
+- Validates shoulder horizontal distance doesn't exceed maximum percentage
+- Returns validation results for left wrist, right wrist, and shoulders
 
-person_kpts: Array of person keypoints (17 COCO format keypoints)
+**Key Features:**
+- Robust to missing keypoints
+- Percentage-based normalization for scale invariance
+- Configurable validation parameters
 
-min_percent: Minimum vertical percentage threshold
+**2. process_video(source, output_path, model, confidence_threshold=0.5, ...)**
+**Purpose:** Main video processing pipeline
+**Processing Flow:**
+1. Opens video source and initializes processing
 
-max_percent: Maximum vertical percentage threshold
+2. Processes central 50% region of each frame for efficiency
 
-wrist_type: Which wrists to validate ("left", "right", "both")
+3. Runs YOLO pose estimation on central region
 
-max_shoulder_percent: Maximum shoulder width percentage
+4. Adjusts keypoint coordinates to full frame
 
-Validation Logic:
+5. Validates poses using validate_wrist_position
 
-Calculates reference range from shoulders (0%) to hips (100%)
+6. Saves frames and clips when spool poses detected
 
-Validates wrist vertical positions within specified percentage range
+7. Provides real-time visualization and controls
 
-Validates shoulder horizontal distance doesn't exceed maximum percentage
+**Optimization Features:**
+- Central region processing reduces computation by 50%
+- GPU acceleration support
+- Frame skipping after clip detection to avoid redundant processing
 
-Returns validation results for left wrist, right wrist, and shoulders
-
-Key Features:
-
-Robust to missing keypoints
-
-Percentage-based normalization for scale invariance
-
-Configurable validation parameters
-
-2. process_video(source, output_path, model, confidence_threshold=0.5, ...)
-Purpose: Main video processing pipeline
-
-Processing Flow:
-
-Opens video source and initializes processing
-
-Processes central 50% region of each frame for efficiency
-
-Runs YOLO pose estimation on central region
-
-Adjusts keypoint coordinates to full frame
-
-Validates poses using validate_wrist_position
-
-Saves frames and clips when spool poses detected
-
-Provides real-time visualization and controls
-
-Optimization Features:
-
-Central region processing reduces computation by 50%
-
-GPU acceleration support
-
-Frame skipping after clip detection to avoid redundant processing
-
-3. process_specific_sources()
+**3. process_specific_sources()**
 Purpose: Automated batch processing of video files
 
 Workflow:

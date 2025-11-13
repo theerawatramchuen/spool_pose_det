@@ -38,3 +38,11 @@ An automated computer vision system for detecting specific human poses ("spool p
    ```bash
    git clone https://github.com/your-username/spool-pose-detection.git
    cd spool-pose-detection
+
+2. **Install dependencies**
+   ```bash
+   pip install ultralytics opencv-python numpy torch
+
+3. **Download YOLO model**
+   - The system automatically downloads yolo11s-pose.pt on first run
+   - Or manually download from Ultralytics and place in project directory

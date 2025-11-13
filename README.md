@@ -169,8 +169,8 @@ This system is designed to automatically detect "spool poses" in video files usi
 MIN_VERTICAL_PERCENT = -20    # Minimum wrist vertical position (%)
 MAX_VERTICAL_PERCENT = 20     # Maximum wrist vertical position (%)
 WRIST_TYPE = "both"           # Which wrists to validate
-MAX_SHOULDER_PERCENT = 10     # Maximum shoulder width (%)```
-
+MAX_SHOULDER_PERCENT = 10     # Maximum shoulder width (%)
+```
 Processing Settings
 python
 confidence_threshold = 0.5    # YOLO detection confidence

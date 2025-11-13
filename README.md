@@ -163,6 +163,8 @@ This system is designed to automatically detect "spool poses" in video files usi
 - Saves in spool_pose_clips folder
 - Provides context around detected poses
 
+<img width="1707" height="2560" alt="image" src="https://github.com/user-attachments/assets/3e7e5de9-e71a-4879-98f9-38efe3193752" />
+
 ## Configuration Parameters
 ### Pose Validation Settings
 ```python

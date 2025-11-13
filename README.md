@@ -171,53 +171,43 @@ MAX_VERTICAL_PERCENT = 20     # Maximum wrist vertical position (%)
 WRIST_TYPE = "both"           # Which wrists to validate
 MAX_SHOULDER_PERCENT = 10     # Maximum shoulder width (%)
 ```
-Processing Settings
-python
+### Processing Settings
+```python
 confidence_threshold = 0.5    # YOLO detection confidence
 central_region_width = 0.5    # Process only central 50% of frame
 clip_duration = 600           # Frames in saved clips (300 before/after)
-Keypoint Mapping (COCO 17 Format)
+```
+### Keypoint Mapping (COCO 17 Format)
 The system uses COCO 17 keypoint format:
 
-0: nose
+- 0: nose
+- 1-2: eyes
+- 3-4: ears
+- 5-6: shoulders
+- 7-8: elbows
+- 9-10: wrists
+- 11-12: hips
+- 13-16: knees and ankles
 
-1-2: eyes
+### Dependencies
+### Core Libraries
+- ultralytics - YOLO pose estimation
+- opencv-python - Video I/O and image processing
+- numpy - Numerical computations
+- torch - GPU acceleration
+- shutil, os, pathlib - File management
 
-3-4: ears
+### Model Requirements
+- Primary model: yolo11s-pose.pt
+- GPU support via CUDA (falls back to CPU)
 
-5-6: shoulders
-
-7-8: elbows
-
-9-10: wrists
-
-11-12: hips
-
-13-16: knees and ankles
-
-Dependencies
-Core Libraries
-ultralytics - YOLO pose estimation
-
-opencv-python - Video I/O and image processing
-
-numpy - Numerical computations
-
-torch - GPU acceleration
-
-shutil, os, pathlib - File management
-
-Model Requirements
-Primary model: yolo11s-pose.pt
-
-GPU support via CUDA (falls back to CPU)
-
-Usage Examples
-Basic Execution
-python
+### Usage Examples
+### Basic Execution
+```python
 python spool4vid_folder_gpu.py
-Custom Processing
-python
+```
+### Custom Processing
+```python
 process_video(
     "input_video.mp4", 
     "output_video.mp4", 
@@ -226,8 +216,9 @@ process_video(
     max_vertical_percent=25,
     wrist_type="left"
 )
-Output Structure
-text
+```
+### Output Structure
+```text
 C:\RecordDownload\
 ├── processed_*.mp4              # Processed video outputs
 ├── processed_files\             # Original files after processing
@@ -236,88 +227,69 @@ C:\RecordDownload\
 │   └── spool_pose_*.jpg
 └── spool_pose_clips\            # Video clips around detections
     └── spool_pose_*.mp4
-Performance Considerations
-GPU Acceleration
-Automatically detects and uses CUDA-capable GPUs
+```
+### Performance Considerations
+### GPU Acceleration
+- Automatically detects and uses CUDA-capable GPUs
+- Falls back to CPU if GPU unavailable
+- Significant speed improvement with GPU
 
-Falls back to CPU if GPU unavailable
+### Processing Optimizations
+- Central region processing reduces computation
+- Frame skipping after detection events
+- Efficient keypoint coordinate adjustment
 
-Significant speed improvement with GPU
+### Memory Management
+- Video streams processed sequentially
+- Frames released after processing
+- Model loaded once for batch processing
 
-Processing Optimizations
-Central region processing reduces computation
+### Error Handling
+### Robust Keypoint Processing
+- Handles missing or invalid keypoints
+- Validates reference ranges before calculations
+- Continues processing despite individual frame errors
 
-Frame skipping after detection events
+### File Management
+- Creates necessary directories automatically
+- Handles file move operations with error checking
+- Continues processing next file on errors
 
-Efficient keypoint coordinate adjustment
-
-Memory Management
-Video streams processed sequentially
-
-Frames released after processing
-
-Model loaded once for batch processing
-
-Error Handling
-Robust Keypoint Processing
-Handles missing or invalid keypoints
-
-Validates reference ranges before calculations
-
-Continues processing despite individual frame errors
-
-File Management
-Creates necessary directories automatically
-
-Handles file move operations with error checking
-
-Continues processing next file on errors
-
-Extension Points
-Adding New Pose Validations
-python
+### Extension Points
+### Adding New Pose Validations
+```python
 def validate_custom_pose(person_kpts, parameters):
     # Add custom validation logic
     return validation_results
-Supporting Additional Models
-python
+```
+### Supporting Additional Models
+```python
 model = YOLO("custom-pose-model.pt")
-Custom Output Formats
+```
+### Custom Output Formats
 Modify save_spool_pose_frame() and save_spool_pose_clip() for different output formats.
 
-Troubleshooting
-Common Issues
-No GPU detection: Check CUDA installation and torch CUDA support
+## Troubleshooting
+### Common Issues
+1. **No GPU detection:** Check CUDA installation and torch CUDA support
+2. **Missing model:** Ensure yolo11s-pose.pt is available
+3. **File permission errors:** Verify write permissions in target directories
+4. **Video read errors:** Check video file integrity and codec support
 
-Missing model: Ensure yolo11s-pose.pt is available
+### Debug Features
+- Real-time visualization with pose overlays
+- Pause/resume with 'p' key
+- Manual frame save with 's' key
+- Detailed console logging
 
-File permission errors: Verify write permissions in target directories
-
-Video read errors: Check video file integrity and codec support
-
-Debug Features
-Real-time visualization with pose overlays
-
-Pause/resume with 'p' key
-
-Manual frame save with 's' key
-
-Detailed console logging
-
-Future Development Opportunities
-Potential Enhancements
-Multi-person tracking - Track individuals across frames
-
-Temporal smoothing - Apply filters to reduce jitter
-
-Additional pose types - Support for multiple pose validations
-
-Web interface - Browser-based control and monitoring
-
-Database integration - Store detection results and metadata
-
-Real-time streaming - Process live video feeds
-
-Advanced analytics - Pose statistics and trend analysis
+## Future Development Opportunities
+### Potential Enhancements
+1. **Multi-person tracking -** Track individuals across frames
+2. **Temporal smoothing -** Apply filters to reduce jitter
+3. **Additional pose types -** Support for multiple pose validations
+4. **Web interface -** Browser-based control and monitoring
+5. **Database integration -** Store detection results and metadata
+6. **Real-time streaming -** Process live video feeds
+7. **Advanced analytics -** Pose statistics and trend analysis
 
 This documentation provides a comprehensive overview of the spool pose detection system for future development and maintenance.

@@ -65,6 +65,7 @@ This system is designed to automatically detect "spool poses" in video files usi
 
 ### Key Functions Documentation
 **1. validate_wrist_position(person_kpts, min_percent, max_percent, wrist_type="both", max_shoulder_percent=30)**
+
 **Purpose:** Validates if detected wrists meet spool pose criteria
 
 **Parameters:**

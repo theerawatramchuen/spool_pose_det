@@ -69,11 +69,11 @@ This system is designed to automatically detect "spool poses" in video files usi
 **Purpose:** Validates if detected wrists meet spool pose criteria
 
 **Parameters:**
-- person_kpts: Array of person keypoints (17 COCO format keypoints)
-- min_percent: Minimum vertical percentage threshold
-- max_percent: Maximum vertical percentage threshold
-- wrist_type: Which wrists to validate ("left", "right", "both")
-- max_shoulder_percent: Maximum shoulder width percentage
+- `person_kpts`: Array of person keypoints (17 COCO format keypoints)
+- `min_percent`: Minimum vertical percentage threshold
+- `max_percent`: Maximum vertical percentage threshold
+- `wrist_type`: Which wrists to validate ("left", "right", "both")
+- `max_shoulder_percent`: Maximum shoulder width percentage
   
 **Validation Logic:**
 - Calculates reference range from shoulders (0%) to hips (100%)

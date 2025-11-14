@@ -79,8 +79,8 @@ This system is designed to automatically detect "spool poses" in video files usi
 - Calculates reference range from shoulders (0%) to hips (100%)
 - Validates wrist vertical positions within specified percentage range
 - Validates shoulder horizontal distance doesn't exceed maximum percentage
-- Validates elbow vertical positions within specified percentage range (*   Eval   *)
-- Validates knee vertical positions within specified percentage range (*   Eval   *)
+- Validates elbow vertical positions within specified percentage range ## 🚀
+- Validates knee vertical positions within specified percentage range ## 🚀
 - Returns validation results for left wrist, right wrist, and shoulders
 
 **Key Features:**
